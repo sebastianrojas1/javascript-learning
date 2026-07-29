@@ -5,6 +5,22 @@ const producto = {
   stock: 10,
 };
 
+const cliente = {
+  id: 1,
+  nombre: "juan",
+  email: "juan@gmail.com",
+  telefono: "+54 11 5564-2603",
+}
+
+const venta = {
+  id: 1,
+  cliente,
+  producto,
+  cantidad: 2,
+  total: 0,
+  estado: "pendiente",
+}
+/*
 console.log("Producto inicial:");
 console.log(producto);
 
@@ -20,3 +36,12 @@ totalVenta = totalVenta + producto.precio;
 
 console.log("Total de la venta:");
 console.log(totalVenta);
+*/
+venta.total = venta.cantidad * venta.producto.precio;
+
+console.log("El cliente: ");
+console.log(venta.cliente.nombre);
+console.log("adquirio producto: ");
+console.log(venta.producto.nombre);
+console.log("la venta queda impresa como: ");
+console.log("cantidad= ", venta.cantidad, "valor: ",venta.total, "estado: ", venta.estado);
