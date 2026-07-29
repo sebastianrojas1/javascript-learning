@@ -2,7 +2,7 @@ const producto = {
   id: 1,
   nombre: "Mouse inalámbrico",
   precio: 25000,
-  stock: 10,
+  stock: 2,
 };
 
 const cliente = {
@@ -25,7 +25,8 @@ return venta.cantidad * venta.producto.precio ;
 }
 
 function mostrarResumenVenta(venta) {
-    console.log("RESUMEN DE VENTA\n","El cliente:",venta.cliente.nombre,", Producto:",venta.producto.nombre,", Cantidad:",venta.cantidad,", Total:",calcularTotalVenta(venta),", Estado:",venta.estado,", Stock suficiente:", hayStockSuficiente(venta));    
+    console.log("\nRESUMEN DE VENTA\n","El cliente:",venta.cliente.nombre,", Producto:",venta.producto.nombre,
+    ", Cantidad:",venta.cantidad,", Total:",calcularTotalVenta(venta),", Estado:",venta.estado, "Stock restante:", venta.producto.stock);    
 }
 /* MI FORMA 
 function hayStockSuficiente(venta) {
@@ -36,4 +37,23 @@ function hayStockSuficiente(venta) {
 function hayStockSuficiente(venta) {
     return venta.producto.stock >= venta.cantidad;
 }
+
+function confirmarVenta(venta) {
+    if (hayStockSuficiente(venta)) {
+        venta.producto.stock -= venta.cantidad;
+        venta.estado = "confirmada";
+        return true;
+    }else {
+        venta.estado = "rechazada";
+        return false;
+    }
+}
+
+console.log("\n¿Hay stock suficiente?" , hayStockSuficiente(venta)); 
+
+if (!confirmarVenta(venta)) {
+  console.log("No se puede realizar la venta, no hay stock suficiente.");
+}
 mostrarResumenVenta(venta);
+
+console.log("\n¿Hay stock suficiente?" , hayStockSuficiente(venta)); 
