@@ -2,7 +2,7 @@ const producto = {
   id: 1,
   nombre: "Mouse inalámbrico",
   precio: 25000,
-  stock: 1,
+  stock: 10,
 };
 
 const cliente = {
