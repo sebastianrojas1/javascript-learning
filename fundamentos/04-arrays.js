@@ -153,3 +153,52 @@ console.log("\nTotal general de ventas:", totalGeneralVentas);
 const ventasConfirmadasResumen = resumenVentas.filter(venta => venta.ventaEstado === "confirmada");
 const totalVentasConfirmadas = ventasConfirmadasResumen.reduce((acumulador, venta)=> acumulador + venta.total, 0);
 console.log("\nTotal de ventas confirmadas:", totalVentasConfirmadas);
+
+//FUNCION ENCADENADA
+const totalVentasPendientes = resumenVentas.filter(venta=>venta.ventaEstado === "pendiente").reduce((acumulador, venta)=> acumulador + venta.total, 0);
+console.log("\nTotal de ventas pendientes:", totalVentasPendientes);
+
+//FUNCION SOME
+const hayVentasRechazadas = resumenVentas.some(venta=>venta.ventaEstado === "rechazada");
+console.log("\n¿Hay ventas rechazadas?", hayVentasRechazadas);
+
+//FUNCION EVERY
+const todosLosProductosTienenStock = productos.every(producto=>producto.stock > 0);
+console.log("\n¿Todos los productos tienen stock?", todosLosProductosTienenStock);
+
+//FUNCION INCLUDES
+const estadosValidos = ["pendiente", "confirmada", "rechazada"];
+const estadoVentaEsValido = estadosValidos.includes(ventas[0].estado);
+console.log("\n¿El estado de la primera venta es válido?", estadoVentaEsValido);
+
+// FUNCION FOREACH
+console.log("\nListado de resumenes de ventas:");
+
+resumenVentas.forEach((venta) => {
+  console.log(
+    `Venta ${venta.ventaId} - ${venta.clienteNombre} compró ${venta.productoNombre} por ${venta.total} - Estado: ${venta.ventaEstado}`
+  );
+});
+
+// FUNCION SORT
+
+const ventasOrdenadasPorTotalDesc = [...resumenVentas].sort(
+  (a, b) => b.total - a.total
+);
+
+console.log("\nVentas ordenadas por total de mayor a menor:");
+console.log(ventasOrdenadasPorTotalDesc);
+
+const ventasOrdenadasPorTotalAsc = [...resumenVentas].sort(
+  (a, b) => a.total - b.total
+);
+
+console.log("\nVentas ordenadas por total de menor a mayor:");
+console.log(ventasOrdenadasPorTotalAsc);
+
+const ventasOrdenadasPorCliente = [...resumenVentas].sort((a, b) =>
+  a.clienteNombre.localeCompare(b.clienteNombre)
+);
+
+console.log("\nVentas ordenadas por cliente:");
+console.log(ventasOrdenadasPorCliente);
