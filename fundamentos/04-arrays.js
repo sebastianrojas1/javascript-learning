@@ -51,14 +51,28 @@ const ventas = [
     clienteId: 2,
     productoId: 2,
     cantidad: 1,
-    estado: "pendiente",
+    estado: "confirmada",
   },
   {
     id: 3,
     clienteId: 3,
     productoId: 3,
     cantidad: 4,
+    estado: "rechazada",
+  },
+  {
+    id: 4,
+    clienteId: 1,
+    productoId: 2,
+    cantidad: 1,
     estado: "pendiente",
+  },
+  {
+    id: 5,
+    clienteId: 2,
+    productoId: 1,
+    cantidad: 3,
+    estado: "confirmada",
   },
 ];
 
@@ -70,10 +84,10 @@ console.log("Primera venta:", ventas[0]);
 const productoEncontrado = productos.find(producto=>producto.id === 2);
 console.log("Producto encontrado con id 2:", productoEncontrado);*/
 
+//FUNCION FIND
 const ventaEncontrada = ventas.find(venta=>venta.id === 1);
 const clienteDeLaVenta = clientes.find(cliente=>cliente.id === ventaEncontrada.clienteId);
-const productoDeLaVenta = productos.find(producto=>producto.id === ventaEncontrada.productoId);
-
+  const productoDeLaVenta = productos.find(producto=>producto.id === ventaEncontrada.productoId);
 const totalVenta = (venta, producto) => venta.cantidad * producto.precio;
 function mostrarResumenVenta(venta, cliente, producto) {
   console.log(
@@ -94,4 +108,40 @@ function mostrarResumenVenta(venta, cliente, producto) {
     producto.stock
   );
 }
-mostrarResumenVenta(ventaEncontrada);
+mostrarResumenVenta(ventaEncontrada, clienteDeLaVenta, productoDeLaVenta);
+
+//FUNCION FILTER
+const ventasPendientes = ventas.filter(venta=>venta.estado === "pendiente");
+const ventasConfirmadas = ventas.filter(venta=>venta.estado === "confirmada");
+const ventasRechazadas = ventas.filter(venta=>venta.estado==="rechazada");
+console.log("\nVentas pendientes:", ventasPendientes.length);
+console.log(ventasPendientes);
+
+console.log("\nVentas confirmadas:", ventasConfirmadas.length);
+console.log(ventasConfirmadas);
+
+console.log("\nVentas rechazadas:", ventasRechazadas.length);
+console.log(ventasRechazadas);
+
+//FUNCION MAP
+const nombresProductos = productos.map(producto=>producto.nombre);
+console.log("\nNombres de productos:", nombresProductos);
+const preciosProductos = productos.map(producto=>producto.precio);
+console.log("\nPrecios de productos:", preciosProductos);
+const stockProductos = productos.map(producto=>producto.stock);
+console.log("\nStock de productos:", stockProductos);
+
+const resumenVentas = ventas.map(venta=>{
+  const cliente = clientes.find(cliente=>cliente.id === venta.clienteId);
+  const producto = productos.find(producto=>producto.id === venta.productoId); 
+  const total = totalVenta(venta, producto); 
+  return {
+    ventaId: venta.id,
+    clienteNombre: cliente.nombre,
+    productoNombre: producto.nombre,
+    ventaCantidad: venta.cantidad,
+    total: total,
+    ventaEstado: venta.estado,
+  };
+});
+console.log("\nResumenes de ventas:", resumenVentas);
