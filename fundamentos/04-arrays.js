@@ -145,3 +145,11 @@ const resumenVentas = ventas.map(venta=>{
   };
 });
 console.log("\nResumenes de ventas:", resumenVentas);
+
+//FUNCION REDUCE
+const totalGeneralVentas = resumenVentas.reduce((acumulador, venta)=> acumulador + venta.total, 0);
+console.log("\nTotal general de ventas:", totalGeneralVentas);
+
+const ventasConfirmadasResumen = resumenVentas.filter(venta => venta.ventaEstado === "confirmada");
+const totalVentasConfirmadas = ventasConfirmadasResumen.reduce((acumulador, venta)=> acumulador + venta.total, 0);
+console.log("\nTotal de ventas confirmadas:", totalVentasConfirmadas);
