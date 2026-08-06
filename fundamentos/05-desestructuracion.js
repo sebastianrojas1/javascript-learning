@@ -92,7 +92,6 @@ const{nombre: nombreProducto, precio: precioProducto} = productoEncontrado;
 const total = cantidad * precioProducto;
 console.log("Resumen de la venta:" + "\n", nombreCliente +"-"+  nombreProducto 
     +"-"+ cantidad  +"-" +precioProducto +"-"+ total);
-
 function mostrarResumenProducto({ nombre, precio, stock }) {
   console.log(
     `Producto: ${nombre}
@@ -100,11 +99,61 @@ function mostrarResumenProducto({ nombre, precio, stock }) {
      Stock: ${stock}`
   );
 }
-
 mostrarResumenProducto(productoEncontrado);
+
 
 function calcularTotalVenta ({cantidad},{precio}){
     return cantidad * precio;
 }
-
 console.log(calcularTotalVenta(ventaEncontrado, productoEncontrado));
+
+ 
+const productoSinStock = {
+  id: 4,
+  nombre: "Notebook",
+  precio: 900000,
+};
+function mostrarProductoConStock({ nombre, precio, stock = 0 }) {
+  console.log(`Producto: ${nombre} - Precio: ${precio} - Stock: ${stock}`);
+}
+mostrarProductoConStock(productoSinStock);
+
+//De esta forma no recorro el array, se guardan en orden hasta cuantas variables se declaren.
+// si hay mas elementos en el array que variables declaradas, los sobrantes se ignoran.
+const [primerProducto, segundoProducto] = productos;
+
+console.log(`Primer producto: ${primerProducto.nombre}`);
+console.log(`Segundo producto: ${segundoProducto.nombre}`);
+
+//Desetructuración de objetos anidados
+const ventaDetallada = {
+  id: 1,
+  cantidad: 2,
+  estado: "pendiente",
+  cliente: {
+    id: 1,
+    nombre: "Juan",
+    email: "juan@gmail.com",
+  },
+  producto: {
+    id: 1,
+    nombre: "Mouse inalámbrico",
+    precio: 25000,
+    stock: 10,
+  },
+};
+const {
+    id:idVenta,
+    cantidad:cantidadVenta,
+    estado:estadoVenta,
+    cliente:{nombre: nombreCliente1},
+    producto: {nombre: nombreProducto1, precio: precioProducto1},
+} = ventaDetallada;
+const total2 = cantidadVenta * precioProducto1;
+console.log(`Resumen de la venta: ${idVenta} - Cliente: ${nombreCliente1} - 
+            Producto: ${nombreProducto1} - Total: ${total2} - Estado: ${estadoVenta}`);
+
+//REST
+ const { nombre, ...datosProducto } = productoEncontrado;
+ console.log("Nombre del producto:", nombre);
+ console.log("Datos del producto:", datosProducto);
