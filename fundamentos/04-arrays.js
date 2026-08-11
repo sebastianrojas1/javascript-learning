@@ -1,3 +1,5 @@
+// Estos arrays funcionan como datos en memoria.
+// Mas adelante, esta informacion vendria de una API o una base de datos.
 const productos = [
   {
     id: 1,
@@ -85,6 +87,8 @@ const productoEncontrado = productos.find(producto=>producto.id === 2);
 console.log("Producto encontrado con id 2:", productoEncontrado);*/
 
 //FUNCION FIND
+// find devuelve el primer elemento que cumple la condicion.
+// Si no encuentra nada, devuelve undefined.
 const ventaEncontrada = ventas.find(venta=>venta.id === 1);
 const clienteDeLaVenta = clientes.find(cliente=>cliente.id === ventaEncontrada.clienteId);
   const productoDeLaVenta = productos.find(producto=>producto.id === ventaEncontrada.productoId);
@@ -111,6 +115,7 @@ function mostrarResumenVenta(venta, cliente, producto) {
 mostrarResumenVenta(ventaEncontrada, clienteDeLaVenta, productoDeLaVenta);
 
 //FUNCION FILTER
+// filter devuelve un nuevo array con todos los elementos que cumplen la condicion.
 const ventasPendientes = ventas.filter(venta=>venta.estado === "pendiente");
 const ventasConfirmadas = ventas.filter(venta=>venta.estado === "confirmada");
 const ventasRechazadas = ventas.filter(venta=>venta.estado==="rechazada");
@@ -124,6 +129,7 @@ console.log("\nVentas rechazadas:", ventasRechazadas.length);
 console.log(ventasRechazadas);
 
 //FUNCION MAP 
+// map transforma cada elemento y devuelve un nuevo array del mismo largo.
 const nombresProductos = productos.map(producto=>producto.nombre);
 console.log("\nNombres de productos:", nombresProductos);
 const preciosProductos = productos.map(producto=>producto.precio);
@@ -147,6 +153,8 @@ const resumenVentas = ventas.map(venta=>{
 console.log("\nResumenes de ventas:", resumenVentas);
 
 //FUNCION REDUCE
+// reduce acumula un resultado final a partir de un array.
+// El 0 es el valor inicial del acumulador.
 const totalGeneralVentas = resumenVentas.reduce((acumulador, venta)=> acumulador + venta.total, 0);
 console.log("\nTotal general de ventas:", totalGeneralVentas);
 
@@ -155,23 +163,28 @@ const totalVentasConfirmadas = ventasConfirmadasResumen.reduce((acumulador, vent
 console.log("\nTotal de ventas confirmadas:", totalVentasConfirmadas);
 
 //FUNCION ENCADENADA
+// Encadenar metodos permite leer el flujo como pasos: filtrar y luego sumar.
 const totalVentasPendientes = resumenVentas.filter(venta=>venta.ventaEstado === "pendiente").reduce((acumulador, venta)=> acumulador + venta.total, 0);
 console.log("\nTotal de ventas pendientes:", totalVentasPendientes);
 
 //FUNCION SOME
+// some responde si al menos un elemento cumple la condicion.
 const hayVentasRechazadas = resumenVentas.some(venta=>venta.ventaEstado === "rechazada");
 console.log("\n¿Hay ventas rechazadas?", hayVentasRechazadas);
 
 //FUNCION EVERY
+// every responde si todos los elementos cumplen la condicion.
 const todosLosProductosTienenStock = productos.every(producto=>producto.stock > 0);
 console.log("\n¿Todos los productos tienen stock?", todosLosProductosTienenStock);
 
 //FUNCION INCLUDES
+// includes sirve para validar si un valor existe dentro de un array simple.
 const estadosValidos = ["pendiente", "confirmada", "rechazada"];
 const estadoVentaEsValido = estadosValidos.includes(ventas[0].estado);
 console.log("\n¿El estado de la primera venta es válido?", estadoVentaEsValido);
 
 // FUNCION FOREACH
+// forEach ejecuta una accion por cada elemento, pero no construye un nuevo array.
 console.log("\nListado de resumenes de ventas:");
 
 resumenVentas.forEach((venta) => {
@@ -182,6 +195,8 @@ resumenVentas.forEach((venta) => {
 
 // FUNCION SORT
 
+// sort modifica el array sobre el que se ejecuta.
+// Por eso se usa [...resumenVentas] para ordenar una copia y conservar el original.
 const ventasOrdenadasPorTotalDesc = [...resumenVentas].sort(
   (a, b) => b.total - a.total
 );

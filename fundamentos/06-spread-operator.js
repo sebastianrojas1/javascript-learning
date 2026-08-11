@@ -1,3 +1,5 @@
+// Spread copia las propiedades de un objeto en otro objeto nuevo.
+// Ojo: es una copia superficial; los objetos anidados requieren copiarse aparte.
 const productoOriginal = {
   id: 1,
   nombre: "Mouse inalámbrico",
@@ -11,6 +13,8 @@ const productos = [
 const productoCopia = { ...productoOriginal };
 
 /*
+Si se asigna un objeto directo a otra variable, ambas variables apuntan al mismo objeto.
+En ese caso, cambiar la "copia" tambien cambia el original.
 const productoCopiaMal = productoOriginal;
 productoCopiaMal.stock = 5;
 console.log("Stock original:", productoOriginal.stock);
@@ -20,6 +24,7 @@ console.log("Stock copia:", productoCopiaMal.stock);
 console.log("Stock original:", productoOriginal.stock);
 console.log("Stock copia instantánea:", productoCopia.stock);
 //Modificar una propiedad en la copia sin afectar al original
+// El orden importa: precio pisa el precio que venia dentro de productoOriginal.
 const productoActualizado = {
   ...productoOriginal,
   precio: 30000,
@@ -30,6 +35,7 @@ console.log("Producto actualizado:", productoActualizado);
 const productoConDescuento={...productoOriginal, descuento:10};
 console.log("Producto con descuento:", productoConDescuento);
 //Agregar un nuevo producto al array de productos sin modificar el array original
+// En arrays, spread permite crear un array nuevo agregando elementos.
 const nuevoProducto = {
   id: 3,
   nombre: "Monitor 24 pulgadas",
@@ -40,10 +46,13 @@ const productosActualizados = [...productos, nuevoProducto];
 console.log("Productos originales:", productos);
 console.log("Productos actualizados:", productosActualizados);
 /* ACA MODIFICO SOLO UN PRODUCTO DEL ARRAY
+Esta forma mezcla filter y map y termina devolviendo una estructura menos practica.
+Para actualizar un elemento puntual, map sobre todo el array suele ser mas claro.
 const productosConStockActuzalizado = [productos.filter((producto) => producto.id === 2).map((producto) => ({ ...producto, stock: 10 })) ];
 console.log("Productos con stock actualizado:", productosConStockActuzalizado);
 */
 //Aca tambien modifico solo un producto del array pero guardo el resultado en un nuevo array
+// Si el producto es el buscado, se devuelve una copia modificada; si no, se devuelve igual.
 const productosConStockActualizado = productos.map((producto) => {
   if (producto.id === 2) {
     return {
@@ -58,8 +67,10 @@ const productosConStockActualizado = productos.map((producto) => {
 console.log("Productos originales:", productos);
 console.log("Productos con stock actualizado:", productosConStockActualizado);
 //Elimino un producto del array sin modificar el array original
+// filter no borra del array original: crea otro array sin el elemento filtrado.
 const productosSinTeclado = productos.filter((producto)=> producto.id !==2);
 //Combinacion de arrays
+// Spread tambien sirve para combinar varios arrays en uno nuevo.
 const productosSucursalA = [
   { id: 1, nombre: "Mouse inalámbrico", precio: 25000, stock: 10 },
   { id: 2, nombre: "Teclado mecánico", precio: 45000, stock: 5 },
@@ -77,6 +88,7 @@ console.log("Productos sucursal A:", productosSucursalA);
 console.log("Productos sucursal B:", productosSucursalB);
 console.log("Todos los productos:", todosLosProductos);
 //Modificacion de un producto en un array anidado a un objeto
+// Para actualizar un objeto anidado sin mutar el original se copia cada nivel necesario.
 const venta = {
   id: 1,
   cantidad: 2,

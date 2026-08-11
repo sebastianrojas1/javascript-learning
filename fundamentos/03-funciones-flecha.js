@@ -30,6 +30,8 @@ function hayStockSuficiente(venta) {
 */
 
 
+// Funcion flecha con retorno implicito: util para expresiones cortas.
+// Equivale a una funcion que devuelve true o false segun la comparacion.
 const hayStockSuficiente = (venta) => venta.producto.stock >= venta.cantidad;
 /*function confirmarVenta(venta) {
     if (haystocksuficienteflecha(venta)) {
@@ -42,6 +44,8 @@ const hayStockSuficiente = (venta) => venta.producto.stock >= venta.cantidad;
     }
 }*/
 //GUARD CLAUSE
+// Guard clause: primero se resuelve el caso que corta el flujo.
+// Esto evita anidar demasiado los if y deja el caso principal mas legible.
 function confirmarVenta(venta) {
   if (!hayStockSuficiente(venta)) {
     venta.estado = "rechazada";
@@ -54,6 +58,7 @@ function confirmarVenta(venta) {
 }
 confirmarVenta(venta);
 
+// Otra funcion flecha con retorno implicito: recibe una venta y devuelve el total.
 const calcularTotalVenta = (venta) => venta.cantidad * venta.producto.precio;
 function mostrarResumenVenta(venta) {
     console.log("\nRESUMEN DE VENTA\n","El cliente:",venta.cliente.nombre,", Producto:",venta.producto.nombre,

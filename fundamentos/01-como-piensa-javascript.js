@@ -1,3 +1,5 @@
+// Un objeto agrupa datos relacionados. En este proyecto, producto, cliente y venta
+// funcionan como las primeras "entidades" del sistema.
 const producto = {
   id: 1,
   nombre: "Mouse inalámbrico",
@@ -37,6 +39,8 @@ totalVenta = totalVenta + producto.precio;
 console.log("Total de la venta:");
 console.log(totalVenta);
 */
+// venta.producto.precio accede a un objeto dentro de otro objeto.
+// En JavaScript se navegan propiedades con punto, parecido a C#.
 venta.total = venta.cantidad * venta.producto.precio;
 
 console.log("El cliente: ");

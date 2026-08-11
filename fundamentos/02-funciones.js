@@ -20,10 +20,14 @@ const venta = {
   estado: "pendiente",
 }
 
+// Esta funcion solo calcula y devuelve un resultado.
+// No cambia la venta ni el producto: eso la hace mas facil de probar.
 function calcularTotalVenta (venta) {
 return venta.cantidad * venta.producto.precio ;
 }
 
+// Esta funcion se encarga de presentar datos.
+// Separarla del calculo ayuda a no mezclar responsabilidades.
 function mostrarResumenVenta(venta) {
     console.log("\nRESUMEN DE VENTA\n","El cliente:",venta.cliente.nombre,", Producto:",venta.producto.nombre,
     ", Cantidad:",venta.cantidad,", Total:",calcularTotalVenta(venta),", Estado:",venta.estado, "Stock restante:", venta.producto.stock);    
@@ -34,10 +38,13 @@ function hayStockSuficiente(venta) {
 }
 */ 
 // FORMA DEL PROFESOR
+// La condicion expresa directamente la regla de negocio: hay stock si stock >= cantidad.
 function hayStockSuficiente(venta) {
     return venta.producto.stock >= venta.cantidad;
 }
 
+// Esta funcion si modifica estado: descuenta stock y cambia el estado de la venta.
+// En codigo profesional conviene que estas funciones tengan nombres muy claros.
 function confirmarVenta(venta) {
     if (hayStockSuficiente(venta)) {
         venta.producto.stock -= venta.cantidad;
