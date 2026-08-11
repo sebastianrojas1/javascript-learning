@@ -123,7 +123,7 @@ console.log(ventasConfirmadas);
 console.log("\nVentas rechazadas:", ventasRechazadas.length);
 console.log(ventasRechazadas);
 
-//FUNCION MAP
+//FUNCION MAP 
 const nombresProductos = productos.map(producto=>producto.nombre);
 console.log("\nNombres de productos:", nombresProductos);
 const preciosProductos = productos.map(producto=>producto.precio);
