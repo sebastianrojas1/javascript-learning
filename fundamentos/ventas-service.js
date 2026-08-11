@@ -13,3 +13,11 @@ export function crearResumenVenta(venta, clientes, productos) {
     estado: venta.estado,
   };
 }
+
+export function obtenerResumenVentas(ventas, clientes, productos) {
+    return ventas.map((venta) => crearResumenVenta(venta, clientes, productos));
+}
+
+export function obtenerVentasPorEstado(ventas, estado) {
+    return ventas.filter((venta) => venta.estado === estado);
+}
