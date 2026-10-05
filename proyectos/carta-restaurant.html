@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Carta de La tradicion, con sandwiches y postres.">
+  <title>Carta | La tradicion</title>
+  <style>
+    :root {
+      color-scheme: light;
+      font-family: Arial, sans-serif;
+      color: #403628;
+      background-color: #f3eee5;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    header,
+    footer {
+      width: min(100% - 1.5rem, 760px);
+      margin: 0 auto;
+      text-align: center;
+      background-color: #fff;
+      color: #30271f;
+    }
+
+    header {
+      padding: 2rem 1rem 0.5rem;
+      border-top: 0.85rem solid #c29d8b;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 1rem;
+      font-weight: 400;
+    }
+
+    header h2 {
+      max-width: 30ch;
+      margin: 0.25rem auto 0;
+      font-family: Georgia, serif;
+      /* El tamaño se adapta al celular y permite agrupar varias palabras por renglón. */
+      font-size: clamp(1.25rem, 5vw, 2rem);
+      font-weight: 400;
+      letter-spacing: 0;
+      line-height: 1.2;
+    }
+
+    main {
+      position: relative;
+      isolation: isolate;
+      width: min(100% - 1.5rem, 760px);
+      min-height: 30rem;
+      margin: 0 auto;
+      padding: 0.5rem 1rem 1.5rem;
+      overflow: hidden;
+      background:
+        radial-gradient(ellipse at 25% 35%, rgb(222 204 171 / 18%) 0 16%, transparent 17%),
+        radial-gradient(ellipse at 75% 65%, rgb(222 204 171 / 18%) 0 20%, transparent 21%),
+        #fff;
+    }
+
+    main > p {
+      text-align: center;
+      color: #766853;
+      font-size: 0.9rem;
+    }
+
+    ul {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      margin: 1rem 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    li {
+      position: relative;
+      min-height: 5.5rem;
+      padding: 0.5rem 22%;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      text-align: center;
+    }
+
+    .show-image {
+      position: absolute;
+      top: 50%;
+      width: clamp(4.5rem, 20vw, 9rem);
+      height: clamp(4.5rem, 20vw, 7rem);
+      padding: 0;
+      border: 0;
+      border-radius: 50%;
+      background-color: transparent;
+      background-position: center;
+      background-size: cover;
+      color: transparent;
+      font-size: 0;
+      cursor: pointer;
+      transform: translateY(-50%);
+      filter: drop-shadow(0 0.3rem 0.35rem rgb(71 49 28 / 18%));
+    }
+
+    li:nth-child(odd) .show-image {
+      left: 0;
+    }
+
+    li:nth-child(even) .show-image {
+      right: 0;
+    }
+
+    /* Las rutas relativas buscan las fotos en la carpeta imagenes del proyecto. */
+    li:nth-child(1) .show-image {
+      background-image: url("../imagenes/jamonyqueso.webp");
+    }
+
+    li:nth-child(2) .show-image {
+      background-image: url("../imagenes/jamonyhuevo.webp");
+    }
+
+    li:nth-child(3) .show-image {
+      background-image: url("../imagenes/tomateyqueso.webp");
+    }
+
+    li:nth-child(4) .show-image {
+      background-image: url("../imagenes/salameyqueso.webp");
+    }
+
+    /* La segunda lista usa sus propias fotos para no repetir las de los clásicos. */
+    main > ul:nth-of-type(2) li:nth-child(1) .show-image {
+      background-image: url("../imagenes/jamoncrudoyrucula.webp");
+    }
+
+    main > ul:nth-of-type(2) li:nth-child(2) .show-image {
+      background-image: url("../imagenes/cheddar.webp");
+    }
+
+    main > ul:nth-of-type(2) li:nth-child(3) .show-image {
+      background-image: url("../imagenes/pavitayqueso.webp");
+    }
+
+    main > ul:nth-of-type(2) li:nth-child(4) .show-image {
+      background-image: url("../imagenes/jamonyquesotriple.webp");
+    }
+
+    /* Los postres tienen sus propias miniaturas en la tercera lista. */
+    main > ul:nth-of-type(3) li:nth-child(1) .show-image {
+      background-image: url("../imagenes/chessecake.webp");
+    }
+
+    main > ul:nth-of-type(3) li:nth-child(2) .show-image {
+      background-image: url("../imagenes/cookies.webp");
+    }
+
+    dialog {
+      /* Al fijarlo a la pantalla, abrirlo no desplaza la carta. */
+      position: fixed;
+      inset: 0;
+      margin: auto;
+      /* La ventana conserva su tamaño y se adapta al espacio visible del celular. */
+      width: min(calc(100vw - 2rem), 420px);
+      height: min(80vh, 560px);
+      height: min(80dvh, 560px);
+      max-width: calc(100vw - 2rem);
+      max-height: 90vh;
+      max-height: 90dvh;
+      padding: 3.5rem 1rem 1rem;
+      border: 0;
+      border-radius: 0.75rem;
+      background-color: #fff;
+    }
+
+    dialog::backdrop {
+      background-color: rgb(0 0 0 / 75%);
+    }
+
+    dialog img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      /* Muestra la foto completa sin estirarla, aunque tenga otra proporción. */
+      object-fit: contain;
+    }
+
+    dialog button {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.5rem;
+      min-height: 44px;
+      padding: 0.5rem 0.75rem;
+      border: 0;
+      border-radius: 0.25rem;
+      background-color: #315447;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    li h3 {
+      margin: 0 0 0.15rem;
+      color: #473922;
+      font-family: Georgia, serif;
+      font-size: 1.1rem;
+      font-style: italic;
+    }
+
+    li p {
+      margin: 0;
+      font-size: 0.85rem;
+      line-height: 1.25;
+    }
+
+    footer {
+      padding: 0.5rem 1rem 1rem;
+      border-bottom: 0.85rem solid #c29d8b;
+    }
+
+    footer p {
+      margin: 0;
+    }
+
+    @media (max-width: 420px) {
+      main {
+        padding-right: 0.5rem;
+        padding-left: 0.5rem;
+      }
+
+      li {
+        padding-right: 23%;
+        padding-left: 23%;
+      }
+
+      .show-image {
+        width: 4.25rem;
+        height: 4.25rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>"La Tradicion"</h1>
+    <h2>Sandwiches artesanales <br> preparados al momento</h2>
+  </header>
+
+  <!-- Esta lista organiza cada plato con su nombre e ingredientes. -->
+  <main>
+    <p>Sandwiches clásicos</p>
+    <ul>
+      <li>
+        <button class="show-image" type="button" data-image-src="../imagenes/jamonyqueso.webp" data-image-alt="Sándwich de jamón y queso">Ver imagen</button>
+        <h3>Jamon y Queso</h3>
+        <p>Jamon, queso, mayonesa casera</p>
+      </li>
+      <li>
+        <button class="show-image" type="button" data-image-src="../imagenes/jamonyhuevo.webp" data-image-alt="Sándwich de jamón y huevo">Ver imagen</button>
+        <h3>Jamon y Huevo</h3>
+        <p>Jamon, huevo, mayonesa casera</p>
+      </li>
+      <li>
+        <button class="show-image" type="button" data-image-src="../imagenes/tomateyqueso.webp" data-image-alt="Sándwich de tomate y queso">Ver imagen</button>
+        <h3>Tomate, Jamon y Queso</h3>
+        <p>Tomate, jamon, queso, mayonesa casera</p>
+      </li>
+      <li>
+        <button class="show-image" type="button" data-image-src="../imagenes/salameyqueso.webp" data-image-alt="Sándwich de salame y queso">Ver imagen</button>
+        <h3>Salame y queso</h3>
+        <p>Salame, queso, mayonesa casera</p>
+      </li>
+    </ul>
+
+    <p>Sandwiches especiales</p>
+    <ul>
+      <li>
+        <button class="show-image" type="button" data-image-src="../imagenes/jamoncrudoyrucula.webp" data-image-alt="Sándwich de jamón crudo y rúcula">Ver imagen</button>
+        <h3>Jamon crudo y rucula</h3>
+        <p>Jamon crudo, rucula, queso, mayonesa casera</p>
+      </li>
+      <li>
+        <button class="show-image" type="button" data-image-src="../imagenes/cheddar.webp" data-image-alt="Sándwich de cheddar">Ver imagen</button>
+        <h3>Cheddar</h3>
+        <p>Cheddar, cebollita, salsa Bigmac</p>
+      </li>
+      <li>
+        <button class="show-image" type="button" data-image-src="../imagenes/pavitayqueso.webp" data-image-alt="Sándwich de pavita y queso">Ver imagen</button>
+        <h3>Pavita y queso</h3>
+        <p>Pavita, queso, mayonesa casera</p>
+      </li>
+      <li>
+        <button class="show-image" type="button" data-image-src="../imagenes/jamonyquesotriple.webp" data-image-alt="Sándwich triple de jamón y queso">Ver imagen</button>
+        <h3>Jamon y queso triple</h3>
+        <p>Jamon, queso, mayonesa casera</p>
+      </li>
+    </ul>
+    <p>Postres</p>
+    <ul>
+      <li>
+        <button class="show-image" type="button" data-image-src="../imagenes/chessecake.webp" data-image-alt="Cheesecake con frutos rojos">Ver imagen</button>
+        <h3>Chessecake</h3>
+        <p>Chessecake con frutos rojos</p>
+      </li>
+      <li>
+        <button class="show-image" type="button" data-image-src="../imagenes/cookies.webp" data-image-alt="Cookies de distintos sabores">Ver imagen</button>
+        <h3>Cookies</h3>
+        <p>Pistacho, redvelvet, chips chocolate, limon y arandanos</p>
+      </li>
+    </ul>
+  </main>
+
+  <footer>
+    <p>¡Gracias por elegir "La Tradicion"!</p>
+  </footer>
+
+  <dialog aria-label="Imagen del plato">
+    <button type="button" aria-label="Cerrar imagen">Cerrar</button>
+    <img alt="">
+  </dialog>
+
+  <script>
+    const imageDialog = document.querySelector("dialog");
+    const enlargedImage = imageDialog.querySelector("img");
+
+    // Al seleccionar una foto, la muestra ampliada en un cuadro modal.
+    document.querySelectorAll(".show-image").forEach((button) => {
+      button.addEventListener("click", () => {
+        enlargedImage.src = button.dataset.imageSrc;
+        enlargedImage.alt = button.dataset.imageAlt;
+        imageDialog.showModal();
+      });
+    });
+
+    imageDialog.querySelector("button").addEventListener("click", () => {
+      imageDialog.close();
+    });
+
+    imageDialog.addEventListener("click", (event) => {
+      if (event.target === imageDialog) {
+        imageDialog.close();
+      }
+    });
+  </script>
+</body>
+</html>
